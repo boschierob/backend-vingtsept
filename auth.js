@@ -16,7 +16,7 @@ module.exports = async (request, response, next) => {
 
         // pass the the user down to the endpoints here
         request.user = user;
-
+        
         // pass down functionality to the endpoint
         next();
 

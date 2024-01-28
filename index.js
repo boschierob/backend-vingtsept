@@ -62,7 +62,7 @@ app.post("/register", async (request, response) => {
         });
 
         await newUser.save();
-        response.json({ message: `ok new User ${nom} registered` })
+        response.json({ message: `ok new User ${email} registered` })
         // res.redirect('/login'); // Redirigez l'utilisateur vers la page de connexion après l'inscription réussie
     } catch (error) {
         console.error(error);
@@ -85,7 +85,7 @@ app.post('/login', async (request, response) => {
                         userEmail: existingUser.email,
                     },
                     "RANDOM-TOKEN",
-                    { expiresIn: "24h" }
+                    { expiresIn: "15s" }
                 );
                 response.status(200).send({
                     message: "Login Successful",
@@ -112,8 +112,23 @@ app.get("/free-endpoint", (request, response) => {
     response.json({ message: "You are authorized to access me"})
 });
 
-app.get("/auth-endpoint", auth, (request, response) => {
-    response.json({ message: "You are authorized to access me" });
+app.get("/auth-endpoint", auth, async (request, response) => {
+    
+    const userId = request.user.userId;
+
+    const user = await User.findById(userId);
+
+
+    console.log(`user : ${user} `);
+    response.json({ 
+        message: "You are authorized to access me",
+        userId: user.id,
+        username: user.nom,
+        email: user.email,
+        statut: user.statut,
+        monthlySheets: user.monthlySheets,
+        customers : user.customers
+    });
   });
 
 // Démarrer le serveur
