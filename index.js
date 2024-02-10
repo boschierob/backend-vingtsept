@@ -114,7 +114,7 @@ app.get("/free-endpoint", (request, response) => {
     response.json({ message: "You are authorized to access me"})
 });
 
-app.get("/auth-endpoint", async (request, response) => {
+app.get("/auth-endpoint",auth, async (request, response) => {
     
     const userId = "65b10e56852e1dd9558eb22e"; //request.user.userId;
 
