@@ -114,9 +114,9 @@ app.get("/free-endpoint", (request, response) => {
     response.json({ message: "You are authorized to access me"})
 });
 
-app.get("/auth-endpoint",async (request, response) => {
+app.get("/auth-endpoint", true, async (request, response) => {
     
-    /*const userId = request.user.userId;
+    const userId = "65b10e56852e1dd9558eb22e"; //request.user.userId;
 
     const user = await User.findById(userId);
 
@@ -131,10 +131,8 @@ app.get("/auth-endpoint",async (request, response) => {
         statut: user.statut,
         monthlySheets: user.monthlySheets,
         customers : user.customers
-    }); */
-    response.json({ 
-        message: "You are logged in and authorized to access me"
     }); 
+    
   });
 
 // Démarrer le serveur
