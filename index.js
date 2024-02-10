@@ -72,6 +72,7 @@ app.post("/register", async (request, response) => {
 });
 
 app.post('/login', async (request, response) => {
+    console.log(request.body)
     try {
         const existingUser = await User.findOne({ email: request.body.email });
         if (existingUser) {
@@ -84,7 +85,7 @@ app.post('/login', async (request, response) => {
                         userId: existingUser._id,
                         userEmail: existingUser.email,
                     },
-                    "RANDOM-TOKEN",
+                     `${process.env.JWSECRET}`,
                     { expiresIn: "15s" }
                 );
                 response.status(200).send({
@@ -120,6 +121,7 @@ app.get("/auth-endpoint", auth, async (request, response) => {
 
 
     console.log(`user : ${user} `);
+    
     response.json({ 
         message: "You are authorized to access me",
         userId: user.id,
