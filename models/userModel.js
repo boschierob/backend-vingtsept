@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { customerSchema } = require('./schemas.js');
-const MonthlySheet = require('./monthlySheetSchema'); 
 
 
 const UserSchema = new mongoose.Schema({
