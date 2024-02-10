@@ -4,7 +4,7 @@ module.exports = async (request, response, next) => {
     try {
         //   get the token from the authorization header
         const token = await request.headers.authorization.split(" ")[1];
-
+        console.log(`token depuis middleware auth : ${token}`);
         //check if the token matches the supposed origin
         const decodedToken = await jwt.verify(
             token,
