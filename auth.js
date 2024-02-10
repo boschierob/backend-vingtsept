@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 module.exports = async (request, response, next) => {
     try {
         const test = 1;
-        test === 1
+        test === 2;
         //   get the token from the authorization header
        /* const token = await request.headers.authorization.split(" ")[1];
         console.log(`token depuis middleware auth : ${token}`);
