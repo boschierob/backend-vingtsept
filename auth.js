@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (request, response, next) => {
     try {
-        return false;
+       
         //   get the token from the authorization header
-       /* const token = await request.headers.authorization.split(" ")[1];
+        const token = await request.headers.authorization.split(" ")[1];
         console.log(`token depuis middleware auth : ${token}`);
         //check if the token matches the supposed origin
         const decodedToken = await jwt.verify(
@@ -16,7 +16,7 @@ module.exports = async (request, response, next) => {
         const user = await decodedToken;
 
         // pass the the user down to the endpoints here
-        request.user = user;  */
+        request.user = user; 
         
         // pass down functionality to the endpoint
         next();

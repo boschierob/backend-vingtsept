@@ -86,7 +86,7 @@ app.post('/login', async (request, response) => {
                         userEmail: existingUser.email,
                     },
                      `${process.env.JWSECRET}`,
-                    { expiresIn: "15s" }
+                    { expiresIn: "1h" }
                 );
                 response.status(200).send({
                     message: "Login Successful",
@@ -116,7 +116,7 @@ app.get("/free-endpoint", (request, response) => {
 
 app.get("/auth-endpoint",auth, async (request, response) => {
     
-    const userId = "65b10e56852e1dd9558eb22e"; //request.user.userId;
+    const userId = request.user.userId;
 
     const user = await User.findById(userId);
 
