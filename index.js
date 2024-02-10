@@ -72,7 +72,7 @@ app.post("/register", async (request, response) => {
 });
 
 app.post('/login', async (request, response) => {
-    console.log(`le body montre: ${request.body}`)
+    
     try {
         const existingUser = await User.findOne({ email: request.body.email });
         if (existingUser) {
@@ -93,6 +93,7 @@ app.post('/login', async (request, response) => {
                     email: existingUser.email,
                     token,
                 });
+                console.log(token);
             } else {
                 response.status(401).json({ message: 'Identifiants invalides' });
             }
