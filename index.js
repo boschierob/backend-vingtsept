@@ -72,11 +72,11 @@ app.post("/register", async (request, response) => {
 });
 
 app.post('/login', async (request, response) => {
-    console.log(request.body)
+    console.log(`le body montre: ${request.body}`)
     try {
         const existingUser = await User.findOne({ email: request.body.email });
         if (existingUser) {
-            const passwordMatch = await bcrypt.compare(request.body.motDePasse, existingUser.motDePasse);
+            const passwordMatch = await bcrypt.compare(request.body.password, existingUser.motDePasse);
             
             if (passwordMatch) {
                 // Création du jeton JWT
