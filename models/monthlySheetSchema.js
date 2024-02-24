@@ -1,4 +1,4 @@
-// MonthlySheet.js
+// MonthlySheetSchema.js
 const mongoose = require('mongoose');
 const { customerSchema } = require('./Schemas');
 

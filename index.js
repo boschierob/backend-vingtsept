@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const auth = require("./auth");
 
+
+
 const app = express();
 const PORT = process.env.PORT || 3333;
 
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 const dbConnect = require("./db/dbConnect");
 
 const User = require("./models/userModel");
+const Intervention = require('./models/interventionModel');
 
 // execute database connection 
 dbConnect();
@@ -40,6 +43,32 @@ app.get("/", (request, response, next) => {
     next();
 });
 
+app.post("/save-inter", async (req, res) => {
+    try {
+        // Récupérer le tableau d'interventions de la requête
+        const interventions  = req.body;
+        //console.log(req.body);
+
+        // Vérifier si le tableau d'interventions est valide
+        if (!Array.isArray(interventions)) {
+            return res.status(400).json({ success: false, message: 'Invalid request: interventions must be an array' });
+        }
+
+        // Enregistrer chaque intervention individuellement
+        const savedInterventions = [];
+        for (const interventionData of interventions) {
+            const newIntervention = new Intervention(interventionData);
+            const savedIntervention = await newIntervention.save();
+            savedInterventions.push(savedIntervention);
+        }
+
+        // Répondre avec un statut de succès et les données des interventions sauvegardées
+        res.status(201).json({ success: true, message: 'Interventions saved successfully', interventions: savedInterventions });
+    } catch (error) {
+        // En cas d'erreur, répondre avec un code d'erreur et le message d'erreur
+        res.status(500).json({ success: false, message: 'Failed to save interventions', error: error.message });
+    }
+});
 
 app.post("/register", async (request, response) => {
     const { nom, email, motDePasse, statut } = request.body;
